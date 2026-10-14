@@ -80,3 +80,17 @@ kalloc(void)
     memset((char *)r, 5, PGSIZE); // fill with junk
   return (void *)r;
 }
+
+// Bytes of free physical memory (for sysinfo).
+uint64
+kfreemem(void)
+{
+  struct run *r;
+  uint64 n = 0;
+
+  acquire(&kmem.lock);
+  for (r = kmem.freelist; r; r = r->next)
+    n++;
+  release(&kmem.lock);
+  return n * PGSIZE;
+}

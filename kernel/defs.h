@@ -27,6 +27,7 @@ void            consputc(int);
 int             kexec(char*, char**);
 
 // file.c
+uint64          count_openfiles(void);
 struct file*    filealloc(void);
 void            fileclose(struct file*);
 struct file*    filedup(struct file*);
@@ -59,6 +60,7 @@ void            ireclaim(int);
 // kalloc.c
 void*           kalloc(void);
 void            kfree(void *);
+uint64          kfreemem(void);
 void            kinit(void);
 
 // log.c
@@ -79,6 +81,8 @@ void            panic(char*) __attribute__((noreturn));
 void            printkinit(void);
 
 // proc.c
+uint64          count_procs(void);
+int             getprocs(uint64, int);
 int             cpuid(void);
 void            kexit(int);
 int             kfork(void);
